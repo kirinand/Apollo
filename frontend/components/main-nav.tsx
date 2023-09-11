@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NavItem } from "@/types";
+import { NavItemType } from "@/types";
 import { menuConfig } from "@/config/menu";
 
 const MainNav = () => {

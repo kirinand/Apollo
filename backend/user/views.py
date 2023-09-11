@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
-from rest_framework.exceptions import AuthenticationFailed
-import jwt, datetime
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
 import environ
 import os
 
@@ -13,6 +13,14 @@ env = environ.Env()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENV_PATH = os.path.join(BASE_DIR, '.env')
 environ.Env.read_env(ENV_PATH)
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
 @api_view(['POST'])
 def signup(request):
@@ -30,39 +38,37 @@ def login(request):
     user = authenticate(email=email, password=password)
     
     if user is None:
-        raise AuthenticationFailed('Incorrect email or password')
+        return Response({'error': 'Invalid credentials'}, status=status.HTTP_404_NOT_FOUND)
     
-    payload = {
-        'uid': user.id,
-        'username': user.email,
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-        'iat': datetime.datetime.utcnow()
-    }
-    token = jwt.encode(payload, env('JWT_SECRET'), algorithm='HS256')
-    
+    token = get_tokens_for_user(user)
+      
     res = Response()
-    res.set_cookie(key='jwt', value=token, httponly=True)
+    res.set_cookie(key='jwt', value=token['access'], httponly=True)
     res.data = {
-        'jwt': token
+        'user': {
+            'username': user.username,
+            'email': user.email,
+            'name': user.name,
+        }
     }
     return res
 
-@api_view(['GET'])
-def get_user(request):
-    token = request.COOKIES.get('jwt')
+# @api_view(['GET'])
+# def get_user(request):
+#     token = request.COOKIES.get('jwt')
     
-    if not token:
-        raise AuthenticationFailed('Unauthorized')
+#     if not token:
+#         raise AuthenticationFailed('Unauthorized')
     
-    try:
-        payload = jwt.decode(token, env('JWT_SECRET'), algorithms='HS256')
-    except jwt.ExpiredSignatureError:
-        raise AuthenticationFailed('Unauthorized')
+#     try:
+#         payload = jwt.decode(token, env('JWT_SECRET'), algorithms='HS256')
+#     except jwt.ExpiredSignatureError:
+#         raise AuthenticationFailed('Unauthorized')
     
-    user = User.objects.filter(id=payload['uid']).first()
-    serializer = UserSerializer(user)
+#     user = User.objects.filter(id=payload['uid']).first()
+#     serializer = UserSerializer(user)
     
-    return Response(serializer.data)
+#     return Response(serializer.data)
 
 @api_view(['POST'])
 def logout(_request):

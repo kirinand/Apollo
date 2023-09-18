@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
-import { useContext } from "react"
+import { useRouter } from 'next/navigation'
 
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -19,13 +19,15 @@ export default function LoginForm() {
     resolver: zodResolver(loginSchema)
   })
 
-  const { user, setUser } = useAppContext()
+  const { setUser } = useAppContext()
+  const router = useRouter()
 
   async function onSubmit(values: FormValues) {
     userLogin(values.email, values.password).then((res) => {
-      
-      setUser(res.user || null)
-      console.log(user)
+      const user = res.user
+      user.isLoggedIn = true
+      setUser(user)
+      router.push('/')
     }).catch((err) => {
       console.log(err)
     })

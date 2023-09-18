@@ -2,7 +2,6 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
-import MainNav from '@/components/main-nav'
 import { AppContextProvider } from '@/context/store'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -22,7 +21,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <AppContextProvider>
           <div>
-            <MainNav />
             <div>{children}</div>
           </div>
         </AppContextProvider>

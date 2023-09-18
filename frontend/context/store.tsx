@@ -15,13 +15,20 @@ type ContextPropsType = {
   setUser: Dispatch<SetStateAction<UserType>>
 }
 
+const defaultUser: UserType = {
+  username: '',
+  email: '',
+  name: '',
+  isLoggedIn: false,
+}
+
 const AppContext = createContext<ContextPropsType>({
-  user: null,
+  user: defaultUser,
   setUser: () => null,
 })
 
 export const AppContextProvider = ({ children } : { children: React.ReactNode }) => {
-  const [user, setUser] = useState<UserType>(null)
+  const [user, setUser] = useState<UserType>(defaultUser)
 
   return (
     <AppContext.Provider value={{ user, setUser }}>

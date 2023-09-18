@@ -76,7 +76,7 @@ def check_user_status(request):
     try:
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:
-            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)   
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)   
         
     res = Response()
     if is_refreshed:

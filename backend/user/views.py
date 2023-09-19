@@ -40,7 +40,6 @@ def login(request):
     res.set_cookie(key='jwt_refresh', value=token['refresh'], httponly=True)
     res.data = {
         'user': {
-            'username': user.username,
             'email': user.email,
             'name': user.name,
         }
@@ -83,7 +82,6 @@ def check_user_status(request):
         res.set_cookie(key='jwt_access', value=access_token, httponly=True)
     res.data = {
         'user': {
-            'username': user.username,
             'email': user.email,
             'name': user.name,
         }
@@ -97,6 +95,7 @@ def logout(_request):
     res.delete_cookie('jwt_access')
     res.delete_cookie('jwt_refresh')
     res.data = {
+        'success': True,
         'message': 'Logout success'
     }
     return res

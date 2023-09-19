@@ -29,7 +29,7 @@ export default function LoginForm() {
       setUser(user)
       router.push('/')
     }).catch((err) => {
-      console.log(err)
+      console.log(err.message)
     })
   }
 

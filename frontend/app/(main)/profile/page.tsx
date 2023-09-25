@@ -1,26 +1,9 @@
-"use client"
-
-import { useRouter } from 'next/navigation'
-
-import { Button } from "@/components/ui/button"
-import { userLogout } from "@/services/auth"
+import { LogoutButton } from '@/components/buttons'
 
 const page = () => {
-  const router = useRouter()
-
-  const handleLogout = async () => {
-    try {
-      const { success } = await userLogout()
-      if (success) {
-        router.push('/login')
-      }
-    } catch (err: any) {
-      console.log(err.message)
-    }
-  }
   return (
     <div>
-      <Button onClick={handleLogout}>Logout</Button>
+      <LogoutButton />
     </div>
   )
 }

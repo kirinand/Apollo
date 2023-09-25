@@ -1,5 +1,3 @@
-"use client"
-
 import Link from "next/link"
 import { signIn } from "next-auth/react"
 import Image from "next/image"
@@ -21,7 +19,7 @@ const UserAuthWidget = (props: UserAuthWidgetProps) => {
       <div>
         <span>Or continue with</span>
       </div>
-      <Button
+      {/* <Button
         onClick={() => {
           signIn("google")
         }}
@@ -34,7 +32,7 @@ const UserAuthWidget = (props: UserAuthWidgetProps) => {
           alt=""
         />
         Google
-      </Button>
+      </Button> */}
       <p>
         {props.mode == "signup" ? (
             <Link href='/login'>Already have an account? Login</Link>

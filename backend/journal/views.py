@@ -58,7 +58,6 @@ def get_entries_by_date(request, year, month, day):
 @api_view(['GET'])
 def get_entry_by_id(request, eid):
     entry = get_object_or_404(JournalEntry, pk=eid, user=request.user)
-    labels = [label.name for label in entry.labels.all()]
     
     serializer = JournalEntrySerializer(entry)
     return Response({'entry': serializer.data})

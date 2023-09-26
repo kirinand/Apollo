@@ -90,7 +90,7 @@ def check_user_status(request):
     return res
 
 @api_view(['POST'])
-def logout(_request):
+def logout():
     res = Response()
     res.delete_cookie('jwt_access')
     res.delete_cookie('jwt_refresh')

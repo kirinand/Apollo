@@ -1,10 +1,10 @@
-from django.urls import path
+from django.urls import path, include
 
 from . import views
 
 urlpatterns = [
-    path('signup', views.signup),
-    path('login', views.login),
-    path('logout', views.logout),
-    path('verify', views.check_user_status)
+    path('login', views.CustomTokenObtainPairView.as_view()),
+    path('verify', views.CustomTokenVerifyView.as_view()),
+    path('refresh', views.CustomTokenRefreshView.as_view()),
+    path('logout', views.LogoutView.as_view()),
 ]

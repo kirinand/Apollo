@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 api_urlpatterns = [
+    path('', include('djoser.urls')),
     path('user/', include('user.urls')),
     path('journal/', include('journal.urls')),
 ]

@@ -106,20 +106,32 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
-AUTH_COOKIE_ACCESS_MAX_AGE = 3600
-AUTH_COOKIE_REFRESH_MAX_AGE = 3600 * 24 * 90
+AUTH_COOKIE = {
+    'ACCESS': 'access',
+    'REFRESH': 'refresh',
+    'ACCESS_MAX_AGE': 3600,
+    'REFRESH_MAX_AGE': 3600 * 24 * 90,
+    'HTTP_ONLY': True,
+    'SAME_SITE': 'None',
+    'SECURE': env.bool('AUTH_COOKIE_SECURE', True)
+}
 
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'password-reset/{uid}/{token}',
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'TOKEN_MODEL': None,
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': [env('FRONTEND_BASE_URL') + uri for uri in env('SOCIAL_AUTH_REDIRECT_URIS').split(',')],
 }
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('GOOGLE_OAUTH_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('GOOGLE_OAUTH_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['name']
 
 MIDDLEWARE = [
     # 'appbackend.middleware.SetUserMiddleware',

@@ -16,53 +16,53 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         response = super().post(request, *args, **kwargs)
         
         if response.status_code == 200:
-            access_token = response.data.get(settings.AUTH_COOKIE.ACCESS)
-            refresh_token = response.data.get(settings.AUTH_COOKIE.REFRESH)
+            access_token = response.data.get(settings.AUTH_COOKIE['ACCESS'])
+            refresh_token = response.data.get(settings.AUTH_COOKIE['REFRESH'])
             
             response.set_cookie(
-                settings.AUTH_COOKIE.ACCESS, 
+                settings.AUTH_COOKIE['ACCESS'], 
                 access_token, 
-                max_age=settings.AUTH_COOKIE.ACCESS_MAX_AGE, 
-                httponly=settings.AUTH_COOKIE.HTTPONLY, 
-                samesite=settings.AUTH_COOKIE.SAMESITE, 
-                secure=settings.AUTH_COOKIE.SECURE
+                max_age=settings.AUTH_COOKIE['ACCESS_MAX_AGE'], 
+                httponly=settings.AUTH_COOKIE['HTTP_ONLY'], 
+                samesite=settings.AUTH_COOKIE['SAME_SITE'], 
+                secure=settings.AUTH_COOKIE['SECURE']
             )
             response.set_cookie(
-                settings.AUTH_COOKIE.REFRESH, 
+                settings.AUTH_COOKIE['REFRESH'], 
                 refresh_token, 
-                max_age=settings.AUTH_COOKIE.REFRESH_MAX_AGE,
-                httponly=settings.AUTH_COOKIE.HTTPONLY, 
-                samesite=settings.AUTH_COOKIE.SAMESITE, 
-                secure=settings.AUTH_COOKIE.SECURE
+                max_age=settings.AUTH_COOKIE['ACCESS_MAX_AGE'], 
+                httponly=settings.AUTH_COOKIE['HTTP_ONLY'], 
+                samesite=settings.AUTH_COOKIE['SAME_SITE'], 
+                secure=settings.AUTH_COOKIE['SECURE']
             )
         
         return response
 
 class CustomTokenRefreshView(TokenRefreshView):
     def post(self, request, *args, **kwargs):
-        refresh_token = request.COOKIES.get(settings.AUTH_COOKIE.REFRESH)
+        refresh_token = request.COOKIES.get(settings.AUTH_COOKIE['REFRESH'])
         
         if refresh_token:
-            request.data[settings.AUTH_COOKIE.REFRESH] = refresh_token
+            request.data[settings.AUTH_COOKIE['REFRESH']] = refresh_token
             
         response = super().post(request, *args, **kwargs)
         
         if response.status_code == 200:
-            access_token = response.data.get(settings.AUTH_COOKIE.ACCESS)
+            access_token = response.data.get(settings.AUTH_COOKIE['ACCESS'])
             response.set_cookie(
-                settings.AUTH_COOKIE.ACCESS, 
+                settings.AUTH_COOKIE['ACCESS'], 
                 access_token, 
-                max_age=settings.AUTH_COOKIE.ACCESS_MAX_AGE, 
-                httponly=settings.AUTH_COOKIE.HTTPONLY, 
-                samesite=settings.AUTH_COOKIE.SAMESITE, 
-                secure=settings.AUTH_COOKIE.SECURE
+                max_age=settings.AUTH_COOKIE['ACCESS_MAX_AGE'], 
+                httponly=settings.AUTH_COOKIE['HTTP_ONLY'], 
+                samesite=settings.AUTH_COOKIE['SAME_SITE'], 
+                secure=settings.AUTH_COOKIE['SECURE']
             )
             
         return response
     
 class CustomTokenVerifyView(TokenVerifyView):
     def post(self, request, *args, **kwargs):
-        access_token = request.COOKIES.get(settings.AUTH_COOKIE.ACCESS)
+        access_token = request.COOKIES.get(settings.AUTH_COOKIE['ACCESS'])
         
         if access_token:
             request.data['token'] = access_token
@@ -72,8 +72,8 @@ class CustomTokenVerifyView(TokenVerifyView):
 class LogoutView(APIView):
     def post(self, _req, *args, **kwargs):
         res = Response()
-        res.delete_cookie(settings.AUTH_COOKIE.ACCESS)
-        res.delete_cookie(settings.AUTH_COOKIE.REFRESH)
+        res.delete_cookie(settings.AUTH_COOKIE['ACCESS'])
+        res.delete_cookie(settings.AUTH_COOKIE['REFRESH'])
         res.data = {
             'success': True,
             'message': 'Logout success'
@@ -85,24 +85,24 @@ class CustomProviderAuthView(ProviderAuthView):
         response = super().post(request, *args, **kwargs)
         
         if response.status_code == 201:
-            access_token = response.data.get(settings.AUTH_COOKIE.ACCESS)
-            refresh_token = response.data.get(settings.AUTH_COOKIE.REFRESH)
+            access_token = response.data.get(settings.AUTH_COOKIE['ACCESS'])
+            refresh_token = response.data.get(settings.AUTH_COOKIE['REFRESH'])
             
             response.set_cookie(
-                settings.AUTH_COOKIE.ACCESS, 
+                settings.AUTH_COOKIE['ACCESS'], 
                 access_token, 
-                max_age=settings.AUTH_COOKIE.ACCESS_MAX_AGE, 
-                httponly=settings.AUTH_COOKIE.HTTPONLY, 
-                samesite=settings.AUTH_COOKIE.SAMESITE, 
-                secure=settings.AUTH_COOKIE.SECURE
+                max_age=settings.AUTH_COOKIE['ACCESS_MAX_AGE'], 
+                httponly=settings.AUTH_COOKIE['HTTP_ONLY'], 
+                samesite=settings.AUTH_COOKIE['SAME_SITE'], 
+                secure=settings.AUTH_COOKIE['SECURE']
             )
             response.set_cookie(
-                settings.AUTH_COOKIE.REFRESH, 
+                settings.AUTH_COOKIE['REFRESH'], 
                 refresh_token, 
-                max_age=settings.AUTH_COOKIE.REFRESH_MAX_AGE,
-                httponly=settings.AUTH_COOKIE.HTTPONLY, 
-                samesite=settings.AUTH_COOKIE.SAMESITE, 
-                secure=settings.AUTH_COOKIE.SECURE
+                max_age=settings.AUTH_COOKIE['ACCESS_MAX_AGE'], 
+                httponly=settings.AUTH_COOKIE['HTTP_ONLY'], 
+                samesite=settings.AUTH_COOKIE['SAME_SITE'], 
+                secure=settings.AUTH_COOKIE['SECURE']
             )
             
         return response

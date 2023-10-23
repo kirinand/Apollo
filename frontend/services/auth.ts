@@ -3,7 +3,6 @@ import { useQuery, useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
 import { useAppContext } from '@/providers/context-providers'
-import { use } from 'react'
 
 export const useLogin = () => {
   const router = useRouter()
@@ -14,6 +13,8 @@ export const useLogin = () => {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/login`, {
         email: email,
         password: password,
+      }, {
+        withCredentials: true,
       })
       return response.data
     },

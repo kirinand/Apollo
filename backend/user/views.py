@@ -6,12 +6,16 @@ import environ
 import os
 from django.conf import settings
 
+from .serializers import CustomTokenObtainPairSerializer
+
 env = environ.Env()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENV_PATH = os.path.join(BASE_DIR, '.env')
 environ.Env.read_env(ENV_PATH)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+    
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
         

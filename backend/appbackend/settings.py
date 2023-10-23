@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'djoser',
     'social_django',
+    'sslserver',
     
     'user',
     'journal',
@@ -113,7 +114,7 @@ AUTH_COOKIE = {
     'REFRESH_MAX_AGE': 3600 * 24 * 90,
     'HTTP_ONLY': True,
     'SAME_SITE': 'None',
-    'SECURE': env.bool('AUTH_COOKIE_SECURE', True)
+    'SECURE': True,
 }
 
 DJOSER = {
@@ -243,5 +244,5 @@ AUTH_USER_MODEL = 'user.User'
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = env(
     'CORS_ALLOWED_ORIGINS', 
-    default='http://localhost:3000,http://127.0.0.1:3000'
+    default='https://localhost:3000,https://127.0.0.1:3000'
 ).split(',')

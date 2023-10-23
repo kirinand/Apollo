@@ -9,12 +9,12 @@ export const LogoutButton = () => {
   const router = useRouter()
   const handleLogout = async () => {
     try {
-      const { success } = await userLogout()
-      if (success) {
+      const data = await userLogout()
+      if (data?.success) {
         router.push('/login')
       }
     } catch (err: any) {
-      console.log(err.message)
+      console.log(err)
     }
   }
   return (

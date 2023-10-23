@@ -3,14 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
-import { useRouter } from 'next/navigation'
 
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { loginSchema } from "@/lib/validation-schemas"
 import { CustomFormField } from "./form-components"
-import { userLogin } from "@/services/auth"
-import { useAppContext } from "@/context/store"
+import { useLogin } from "@/services/auth"
 
 type FormValues = z.infer<typeof loginSchema>
 
@@ -19,18 +17,10 @@ export default function LoginForm() {
     resolver: zodResolver(loginSchema)
   })
 
-  const { setUser } = useAppContext()
-  const router = useRouter()
+  const login = useLogin()
 
   async function onSubmit(values: FormValues) {
-    userLogin(values.email, values.password).then((res) => {
-      const user = res.user
-      user.isLoggedIn = true
-      setUser(user)
-      router.push('/')
-    }).catch((err) => {
-      console.log(err.message)
-    })
+    login.mutate({email: values.email, password: values.password})
   }
 
   return(

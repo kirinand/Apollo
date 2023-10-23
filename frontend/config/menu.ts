@@ -1,12 +1,12 @@
 export const menuConfig = {
   mainNav: [
     {
-      title: "New",
-      href: "/new"
+      title: "Write",
+      href: "/calendar"
     },
     {
       title: "View",
-      href: "/recent"
+      href: "/calendar"
     },
     {
       title: "Insights",

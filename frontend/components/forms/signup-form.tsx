@@ -3,13 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
-import { useRouter } from 'next/navigation'
 
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { signupSchema } from "@/lib/validation-schemas"
 import { CustomFormField } from "./form-components"
-import { userSignup } from "@/services/auth"
+import { useSignup } from "@/services/auth"
 
 type FormValues = z.infer<typeof signupSchema>
 
@@ -17,17 +16,9 @@ export default function SignupForm() {
   const form = useForm<FormValues>({
     resolver: zodResolver(signupSchema)
   })
-  const router = useRouter()
-
+  const signup = useSignup()
   async function onSubmit(values: FormValues) {
-    userSignup(values.email, values.password, values.name).then((res) => {
-      if (!res) {
-        throw new Error('Failed to create user')
-      }
-      router.push('/login')
-    }).catch((err) => {
-      console.log(err.message)
-    })
+    signup.mutate({email: values.email, password: values.password, name: values.name})
   }
 
   return(

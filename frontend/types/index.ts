@@ -6,6 +6,5 @@ export type NavItemType = {
 export type UserType = {
   email: string,
   name: string,
-  username?: string,
-  isLoggedIn?: boolean,
+  isLoggedIn: boolean,
 }

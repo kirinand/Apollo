@@ -13,3 +13,11 @@ export const loginSchema = z.object({
   email: z.string().email(),
   password: z.string()
 })
+
+export const emailSchema = z.object({
+  email: loginSchema.shape.email
+})
+
+export const passwordSchema = z.object({
+  password: signupSchema.shape.password
+})

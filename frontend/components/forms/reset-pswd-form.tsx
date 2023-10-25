@@ -6,42 +6,37 @@ import { useForm } from "react-hook-form"
 
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
-import { loginSchema } from "@/lib/validation-schemas"
+import { passwordSchema } from "@/lib/validation-schemas"
 import { CustomFormField } from "./form-components"
-import { useLogin } from "@/services/auth"
-import Link from "next/link"
+import { useResetPassword } from "@/services/auth"
 
-type FormValues = z.infer<typeof loginSchema>
+type FormValues = z.infer<typeof passwordSchema>
 
-export default function LoginForm() {
+export default function ResetPasswordForm(props: Props) {
   const form = useForm<FormValues>({
-    resolver: zodResolver(loginSchema)
+    resolver: zodResolver(passwordSchema)
   })
-
-  const login = useLogin()
+  const resetPassword = useResetPassword()
 
   async function onSubmit(values: FormValues) {
-    login.mutate({email: values.email, password: values.password})
+    resetPassword.mutate({ uid: props.uid, token: props.token, new_password: values.password })
   }
 
   return(
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <CustomFormField
-          name="email"
-          label="Email"
-          control={form.control}
-        />
-        <CustomFormField
           name="password"
           label="Password"
           control={form.control}
         />
-        <div>
-          <Link href="/reset-password">Forgot password?</Link>
-        </div>
-        <Button type="submit">Login with Email</Button>
+        <Button type="submit">Set New Password</Button>
       </form>
     </Form>
   )
+}
+
+type Props = {
+  uid: string,
+  token: string
 }

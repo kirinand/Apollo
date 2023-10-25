@@ -2,8 +2,10 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
-import { AppContextProvider } from '@/providers/context-providers'
+import { AppContextProvider } from '@/providers/context/app-context-providers'
+import { InfoContextProvider } from '@/providers/context/info-context-provider'
 import ReactQueryProvider from '@/providers/react-query-provider'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,9 +24,12 @@ export default function RootLayout({
       <body className={inter.className}>
         <ReactQueryProvider>
           <AppContextProvider>
-            <div>
-              <div>{children}</div>
-            </div>
+            <InfoContextProvider>
+              <div>
+                <div>{children}</div>
+                <Toaster />
+              </div>
+            </InfoContextProvider>
           </AppContextProvider>
         </ReactQueryProvider>
       </body>

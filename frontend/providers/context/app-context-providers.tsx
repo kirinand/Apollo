@@ -16,7 +16,6 @@ type ContextPropsType = {
 }
 
 const defaultUser: UserType = {
-  username: '',
   email: '',
   name: '',
   isLoggedIn: false,

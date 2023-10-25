@@ -118,7 +118,7 @@ AUTH_COOKIE = {
 }
 
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': 'password-reset/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'reset-password/{uid}/{token}',
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'TOKEN_MODEL': None,
@@ -246,3 +246,11 @@ CORS_ALLOWED_ORIGINS = env(
     'CORS_ALLOWED_ORIGINS', 
     default='https://localhost:3000,https://127.0.0.1:3000'
 ).split(',')
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)

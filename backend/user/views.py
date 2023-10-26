@@ -6,7 +6,7 @@ import environ
 import os
 from django.conf import settings
 
-from .serializers import CustomTokenObtainPairSerializer, CustomTokenRefreshSerializer, CustomTokenVerifySerializer
+from .serializers import CustomTokenObtainPairSerializer, CustomTokenRefreshSerializer, CustomTokenVerifySerializer, CustomProviderAuthSerializer
 
 env = environ.Env()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -89,9 +89,8 @@ class LogoutView(APIView):
         return res
     
 class CustomProviderAuthView(ProviderAuthView):
-    # TODO: Fix this
-    # def get_serializer_class(self):
-    #     return CustomTokenObtainPairSerializer
+    def get_serializer_class(self):
+        return CustomProviderAuthSerializer
     
     def perform_create(self, serializer):
         super().perform_create(serializer)

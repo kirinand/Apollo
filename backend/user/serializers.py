@@ -59,5 +59,14 @@ class CustomTokenVerifySerializer(TokenVerifySerializer):
         
         return data
     
-# class CustomProviderAuthSerializer(ProviderAuthSerializer):
+class CustomProviderAuthSerializer(ProviderAuthSerializer):
+    def create(self, validated_data):
+        user = validated_data["user"]
+
+        tokens = CustomTokenObtainPairSerializer().get_token(user)
+        
+        return {
+            'access': str(tokens.access_token),
+            'refresh': str(tokens)
+        }
     

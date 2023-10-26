@@ -247,6 +247,7 @@ export const useOAuthLogin = () => {
         console.log('success: Login succeeded')
         setUser(prev => ({
           ...prev,
+          email: data.user,
           isLoggedIn: true,
         }))
         router.push('/')

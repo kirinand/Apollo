@@ -45,27 +45,6 @@ export const useLogin = () => {
   )
 }
 
-export const getUser = async (access_token: TokenType, refresh_token: TokenType) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/verify`, 
-    {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Accept': 'application/json',
-        'Cookie': `jwt_access=${access_token.value}; jwt_refresh=${refresh_token?.value}`
-      }
-    }
-  )
-
-  if (!response.ok) {
-    throw new Error(response.statusText || 'Something went wrong')
-  }
-  console.log(response.headers.getSetCookie())
-  const data = await response.json()
-  return data.user
-}
-
 export const useSignup = () => {
   const router = useRouter()
   const { setInfo } = useInfoContext()
@@ -223,7 +202,59 @@ export const useRefresh = () => {
   )
 }
 
-type TokenType = {
-  name: string,
-  value: string,
+export const useOAuth = () => {
+  const { toast } = useToast()
+
+  return useMutation(
+    async ({ provider, redirectUri }: { provider: string, redirectUri: string }) => {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/o/${provider}/?redirect_uri=${
+        process.env.NEXT_PUBLIC_BASE_URL
+      }/oauth/${redirectUri}`, {
+        withCredentials: true,
+      })
+      return response.data
+    },
+    {
+      onSuccess: (data: any) => {
+        if (!window) throw Error
+        window.location.href = data.authorization_url
+      },
+      onError: () => {
+        toast({ description: constants.err.generic })
+      }
+    }
+  )
+}
+
+export const useOAuthLogin = () => {
+  const router = useRouter()
+  const { toast } = useToast()
+  const { setUser } = useAppContext()
+
+  return useMutation(
+    async ({ provider, state, code }: { provider: string, state: string, code: string }) => {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/o/${provider}/?state=${
+        encodeURIComponent(state)
+      }&code=${
+        encodeURIComponent(code)
+      }`, {}, {
+        withCredentials: true,
+      })
+      return response.data
+    },
+    {
+      onSuccess: (data: any) => {
+        console.log('success: Login succeeded')
+        setUser(prev => ({
+          ...prev,
+          isLoggedIn: true,
+        }))
+        router.push('/')
+      },
+      onError: () => {
+        toast({ description: constants.err.googleLoginFail })
+        router.push('/login')
+      },
+    }
+  )
 }

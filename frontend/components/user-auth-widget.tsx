@@ -1,10 +1,10 @@
 import Link from "next/link"
-import { signIn } from "next-auth/react"
-import Image from "next/image"
 
 import SignupForm from "./forms/signup-form"
 import LoginForm from "./forms/login-form"
-import { Button } from "@/components/ui/button"
+import { OAuthButton } from "./buttons"
+import constants from "@/constants"
+import { oauthGoogle } from "@/config/utils"
 
 type UserAuthWidgetProps = {
   header: string;
@@ -17,27 +17,17 @@ const UserAuthWidget = (props: UserAuthWidgetProps) => {
       <h1>{props.header}</h1>
       {props.mode == "signup" ? <SignupForm /> : <LoginForm />}
       <div>
-        <span>Or continue with</span>
+        <span>{constants.prompt.orContinueWith}</span>
       </div>
-      {/* <Button
-        onClick={() => {
-          signIn("google")
-        }}
-      >
-        <Image 
-          priority
-          src="@/public/icons/google.svg"
-          height={32}
-          width={32}
-          alt=""
-        />
-        Google
-      </Button> */}
+      <OAuthButton 
+        provider={oauthGoogle.provider} 
+        redirect={oauthGoogle.redirect}
+      />
       <p>
         {props.mode == "signup" ? (
-            <Link href='/login'>Already have an account? Login</Link>
+            <Link href='/login'>{constants.prompt.alreadyHaveAcc}</Link>
           ) : (
-            <Link href='/signup'>Do not have an account? Signup</Link>
+            <Link href='/signup'>{constants.prompt.doNotHaveAcc}</Link>
           )
         }
       </p>

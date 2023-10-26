@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer, TokenVerifySerializer
+from djoser.social.serializers import ProviderAuthSerializer
 import jwt
 
 from django.conf import settings
@@ -28,17 +29,13 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-        
         token['email'] = user.email
-        token['name'] = user.name
         
         return token
     
     def validate(self, attrs):
         data = super().validate(attrs)
-        
         data.update({'email': self.user.email})
-        data.update({'name': self.user.name})
         
         return data
 
@@ -48,9 +45,7 @@ class CustomTokenRefreshSerializer(TokenRefreshSerializer):
         token = attrs['refresh']
         
         decoded_token = jwt.decode(token, settings.SIMPLE_JWT['SIGNING_KEY'], algorithms=[settings.SIMPLE_JWT['ALGORITHM']])
-        
         data.update({'email': decoded_token.get('email')})
-        data.update({'name': decoded_token.get('name')})
         
         return data
     
@@ -59,9 +54,10 @@ class CustomTokenVerifySerializer(TokenVerifySerializer):
         data = super().validate(attrs)
         token = attrs['token']
 
-        decoded_token = jwt.decode(token, settings.SIMPLE_JWT['SIGNING_KEY'], algorithms=[settings.SIMPLE_JWT['ALGORITHM']])
-        
+        decoded_token = jwt.decode(token, settings.SIMPLE_JWT['SIGNING_KEY'], algorithms=[settings.SIMPLE_JWT['ALGORITHM']])  
         data.update({'email': decoded_token.get('email')})
-        data.update({'name': decoded_token.get('name')})
         
         return data
+    
+# class CustomProviderAuthSerializer(ProviderAuthSerializer):
+    

@@ -1,13 +1,14 @@
 import MainNav from "@/components/main-nav"
+import LoginCheck from "@/components/utils/login-check"
 
 const MainLayout = ({ children }: {
   children: React.ReactNode
 }) => {
   return (
-    <div>
+    <LoginCheck>
       <MainNav />
       { children }
-    </div>
+    </LoginCheck>
   )
 }
 

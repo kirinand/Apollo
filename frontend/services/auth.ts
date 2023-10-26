@@ -6,7 +6,6 @@ import { useAppContext } from '@/providers/context/app-context-providers'
 import { useInfoContext } from '@/providers/context/info-context-provider'
 import { useToast } from "@/components/ui/use-toast"
 import constants from '@/constants'
-import { use } from 'react'
 
 export const useLogin = () => {
   const router = useRouter()
@@ -192,14 +191,34 @@ export const useResetPassword = () => {
       onSuccess: (data: any) => {
         console.log('success: Password reset succeeded', data)
         toast({ description: constants.msg.resetPswdSuccess })
+        router.push('/login')
       },
       onError: (error: any) => {
         console.log('error: Password reset failed', error.message)
         toast({ description: constants.err.resetPswdFail })
       },
-      onSettled: () => {
-        router.push('/login')
-      }
+    }
+  )
+}
+
+export const useVerify = () => {
+  return useMutation(
+    async () => {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/verify`, {}, {
+        withCredentials: true,
+      })
+      return response.data
+    }
+  )
+}
+
+export const useRefresh = () => {
+  return useMutation(
+    async () => {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/refresh`, {}, {
+        withCredentials: true,
+      })
+      return response.data
     }
   )
 }

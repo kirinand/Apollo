@@ -6,7 +6,7 @@ import environ
 import os
 from django.conf import settings
 
-from .serializers import CustomTokenObtainPairSerializer
+from .serializers import CustomTokenObtainPairSerializer, CustomTokenRefreshSerializer, CustomTokenVerifySerializer
 
 env = environ.Env()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,6 +43,8 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         return response
 
 class CustomTokenRefreshView(TokenRefreshView):
+    serializer_class = CustomTokenRefreshSerializer
+    
     def post(self, request, *args, **kwargs):
         refresh_token = request.COOKIES.get(settings.AUTH_COOKIE['REFRESH'])
         
@@ -65,6 +67,8 @@ class CustomTokenRefreshView(TokenRefreshView):
         return response
     
 class CustomTokenVerifyView(TokenVerifyView):
+    serializer_class = CustomTokenVerifySerializer
+    
     def post(self, request, *args, **kwargs):
         access_token = request.COOKIES.get(settings.AUTH_COOKIE['ACCESS'])
         

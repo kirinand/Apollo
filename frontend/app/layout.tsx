@@ -25,10 +25,8 @@ export default function RootLayout({
         <ReactQueryProvider>
           <AppContextProvider>
             <InfoContextProvider>
-              <div>
                 <div>{children}</div>
                 <Toaster />
-              </div>
             </InfoContextProvider>
           </AppContextProvider>
         </ReactQueryProvider>

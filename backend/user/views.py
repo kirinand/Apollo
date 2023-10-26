@@ -90,18 +90,16 @@ class LogoutView(APIView):
     
 class CustomProviderAuthView(ProviderAuthView):
     # TODO: Fix this
-    def get_serializer_class(self):
-        return CustomTokenObtainPairSerializer
+    # def get_serializer_class(self):
+    #     return CustomTokenObtainPairSerializer
     
-     # TODO: Fix this
     def perform_create(self, serializer):
-        user = super().perform_create(serializer)
-        
-        if hasattr(user, 'first_name'):
+        super().perform_create(serializer)
+        user = serializer.instance.get('user')
+
+        if user and hasattr(user, 'first_name'):
             user.name = user.first_name
             user.save()
-            
-        return user
     
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)

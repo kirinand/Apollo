@@ -5,9 +5,10 @@ import { useEffect } from "react"
 
 import { useAppContext } from "@/providers/context/app-context-providers"
 import { useVerify, useRefresh } from "@/services/auth"
+import Spinner from "@/components/icons/spinner"
 
 const LoginCheck = ({ children }: { children: React.ReactNode }) => {
-  const { user, setUser } = useAppContext()
+  const { user } = useAppContext()
   const router = useRouter()
 
   const verify = useVerify()
@@ -16,24 +17,8 @@ const LoginCheck = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (!user.isLoggedIn) {
       verify.mutateAsync()
-        .then((data) => {
-          console.log("verify success")
-          setUser({
-            email: data.email,
-            name: data.name,
-            isLoggedIn: true
-         })
-        })
         .catch(() => {
-          console.log("refresh success")
           refresh.mutateAsync()
-            .then((data) => {
-              setUser({
-                email: data.email,
-                name: data.name,
-                isLoggedIn: true
-             })
-            })
             .catch(() => {
               console.log("missing or invalid token")
               router.push('/login')
@@ -42,8 +27,12 @@ const LoginCheck = ({ children }: { children: React.ReactNode }) => {
     }
   }, [])
 
-  
-  return <>{children}</>
+  if (user.isLoggedIn) {
+    return <>{children}</>
+  } else {
+    return <Spinner />
+  }
+
 }
 
 export default LoginCheck

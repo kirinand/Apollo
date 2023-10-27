@@ -14,13 +14,15 @@ export const useLogin = () => {
 
   return useMutation(
     async ({ email, password }: { email: string, password: string }) => {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/login`, {
+      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/login`, {
         email: email,
         password: password,
       }, {
         withCredentials: true,
       })
-      return response.data
+      const data = await _getUser()
+
+      return data
     },
     {
       onSuccess: (data: any) => {
@@ -181,23 +183,57 @@ export const useResetPassword = () => {
 }
 
 export const useVerify = () => {
+  const { setUser } = useAppContext()
+
   return useMutation(
     async () => {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/verify`, {}, {
+      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/verify`, {}, {
         withCredentials: true,
       })
-      return response.data
+      const data = await _getUser()
+
+      return data
+    },
+    {
+      onSuccess: (data: any) => {
+        console.log('success: Verify succeeded', data)
+        setUser({
+          email: data.email,
+          name: data.name,
+          isLoggedIn: true,
+        })
+      },
+      onError: (error: any) => {
+        console.log('error: Verify failed', error.message)
+      },
     }
   )
 }
 
 export const useRefresh = () => {
+  const { setUser } = useAppContext()
+
   return useMutation(
     async () => {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/refresh`, {}, {
+      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/refresh`, {}, {
         withCredentials: true,
       })
-      return response.data
+      const data = await _getUser()
+
+      return data
+    },
+    {
+      onSuccess: (data: any) => {
+        console.log('success: Refresh succeeded', data)
+        setUser({
+          email: data.email,
+          name: data.name,
+          isLoggedIn: true,
+        })
+      },
+      onError: (error: any) => {
+        console.log('error: Refresh failed', error.message)
+      },
     }
   )
 }
@@ -233,23 +269,25 @@ export const useOAuthLogin = () => {
 
   return useMutation(
     async ({ provider, state, code }: { provider: string, state: string, code: string }) => {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/o/${provider}/?state=${
+      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/o/${provider}/?state=${
         encodeURIComponent(state)
       }&code=${
         encodeURIComponent(code)
       }`, {}, {
         withCredentials: true,
       })
-      return response.data
+      const data = await _getUser()
+
+      return data
     },
     {
       onSuccess: (data: any) => {
         console.log('success: Login succeeded')
-        setUser(prev => ({
-          ...prev,
-          email: data.user,
+        setUser({
+          email: data.email,
+          name: data.name,
           isLoggedIn: true,
-        }))
+        })
         router.push('/')
       },
       onError: () => {
@@ -258,4 +296,11 @@ export const useOAuthLogin = () => {
       },
     }
   )
+}
+
+const _getUser = async () => {
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/users/me/`, {
+    withCredentials: true,
+  })
+  return response.data
 }

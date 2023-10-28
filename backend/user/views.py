@@ -97,7 +97,10 @@ class CustomProviderAuthView(ProviderAuthView):
         user = serializer.instance.get('user')
 
         if user and hasattr(user, 'first_name'):
-            user.name = user.first_name
+            if user.first_name:
+                user.name = user.first_name
+            elif hasattr(user, 'last_name') and user.last_name:
+                user.name = user.last_name
             user.save()
     
     def post(self, request, *args, **kwargs):
@@ -126,3 +129,11 @@ class CustomProviderAuthView(ProviderAuthView):
             
         return response
     
+class UpdateNameView(APIView):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        name = request.data.get('name')
+        user.name = name
+        user.save()
+        return Response({'message': 'Successfully updated name', 'name':name})
+        

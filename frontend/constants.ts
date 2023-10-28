@@ -4,14 +4,20 @@ const constants = {
   },
   msg: {
     invalOrInact: "Invalid credentials or inactive account.",
+    nameValidation: "Name too long or too short.",
+    nameNotBlank: "Name must not be blank.",
+  },
+  success: {
     activateSuccess: "Account activated.",
     resetPswdSuccess: "Password reset successful.",
+    updateNameSuccess: "Name updated.",
   },
   err: {
     activateFail: "Account activation failed.",
     resetPswdReqFail: "Failed to send password reset request.",
     resetPswdFail: "Failed to reset password.",
     googleLoginFail: "Failed to login with Google.",
+    updateNameFail: "Failed to update name.",
     generic: "Something went wrong.",
   },
   info: {

@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import CalendarContainer from "@/components/calendar/container"
 import { checkPath } from "../utils"
 
-const YearView = ({ params }: { params: { year: string } }) => {
+const YearPage = ({ params }: { params: { year: string } }) => {
   
   if (!checkPath(params.year)) {
     return redirect("/404")
@@ -19,4 +19,4 @@ const YearView = ({ params }: { params: { year: string } }) => {
   )
 }
 
-export default YearView
+export default YearPage

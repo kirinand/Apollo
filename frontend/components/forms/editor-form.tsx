@@ -13,7 +13,7 @@ const EditorForm = (props: EditorFormProps) => {
     const month = (date.getMonth() + 1).toString()
     const day = date.getDate().toString()
     const content = data.get('content')?.valueOf().toString()
-    // console.log(data.get('content')?.valueOf(),year, month, day)
+    
     if (content) {
       const result = createEntry.mutate({ content, year, month, day })
     }

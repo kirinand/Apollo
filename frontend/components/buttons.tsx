@@ -3,8 +3,9 @@
 import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
-import { useLogout } from "@/services/auth"
+import { useLogout, useForgotPassword } from "@/services/auth"
 import { useOAuth } from "@/services/auth"
+import { useToast } from "@/components/ui/use-toast"
 import constants from "@/constants"
 
 export const LogoutButton = () => {
@@ -14,6 +15,20 @@ export const LogoutButton = () => {
   }
   return (
     <Button onClick={handleLogout}>Logout</Button>
+  )
+}
+
+export const ResetPasswordButton = (props: { email: string }) => {
+  const forgotPassword = useForgotPassword()
+  const { toast } = useToast()
+  const handleResetPassword = async () => {
+    forgotPassword.mutateAsync({ email: props.email })
+      .then(() => {
+        toast({ description: constants.info.resetPswdRequested.replace('{0}', 'your email') })
+      })
+  }
+  return (
+    <Button onClick={handleResetPassword}>Reset Password</Button>
   )
 }
 

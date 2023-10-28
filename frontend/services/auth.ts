@@ -6,6 +6,7 @@ import { useAppContext } from '@/providers/context/app-context-providers'
 import { useInfoContext } from '@/providers/context/info-context-provider'
 import { useToast } from "@/components/ui/use-toast"
 import constants from '@/constants'
+import { set } from 'date-fns'
 
 export const useLogin = () => {
   const router = useRouter()
@@ -116,7 +117,7 @@ export const useActivate = () => {
     {
       onSuccess: (data: any) => {
         console.log('success: Activate succeeded', data)
-        toast({ description: constants.msg.activateSuccess })
+        toast({ description: constants.success.activateSuccess })
       },
       onError: (error: any) => {
         console.log('error: Activate failed', error.message)
@@ -132,7 +133,6 @@ export const useActivate = () => {
 export const useForgotPassword = () => {
   const router = useRouter()
   const { toast } = useToast()
-  const { setInfo } = useInfoContext()
   
   return useMutation(
     async ({ email }: { email: string }) => {
@@ -142,10 +142,8 @@ export const useForgotPassword = () => {
       return response.data
     },
     {
-      onSuccess: (data: any, variables: { email: string }) => {
-        setInfo(constants.info.resetPswdRequested.replace('{0}', variables.email))
+      onSuccess: (data: any) => {
         console.log('success: Reset password request sent', data)
-        router.push('/info')
       },
       onError: (error: any) => {
         console.log('error: Failed to send reset password request', error.message)
@@ -171,7 +169,7 @@ export const useResetPassword = () => {
     {
       onSuccess: (data: any) => {
         console.log('success: Password reset succeeded', data)
-        toast({ description: constants.msg.resetPswdSuccess })
+        toast({ description: constants.success.resetPswdSuccess })
         router.push('/login')
       },
       onError: (error: any) => {
@@ -293,6 +291,36 @@ export const useOAuthLogin = () => {
       onError: () => {
         toast({ description: constants.err.googleLoginFail })
         router.push('/login')
+      },
+    }
+  )
+}
+
+export const useUpdateName = () => {
+  const { toast } = useToast()
+  const { setUser } = useAppContext()
+
+  return useMutation(
+    async ({ name }: { name: string }) => {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/user/update/name`, {
+        name,
+      }, {
+        withCredentials: true,
+      })
+      return response.data
+    },
+    {
+      onSuccess: (data: any) => {
+        console.log('success: Update name succeeded', data)
+        setUser(prev => ({
+          ...prev,
+          name: data.name,
+        }))
+        toast({ description: constants.success.updateNameSuccess })
+      },
+      onError: (error: any) => {
+        console.log('error: Update name failed', error.message)
+        toast({ description: constants.err.updateNameFail })
       },
     }
   )

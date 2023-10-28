@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import EditorForm from "@/components/forms/editor-form"
 import { checkPath } from "../../../utils"
 
-const MonthView = ({ params }: { params: { year: string, month: string, day: string } }) => {
+const EditorPage = ({ params }: { params: { year: string, month: string, day: string } }) => {
 
   if (!checkPath(params.year, params.month, params.day)) {
     return redirect("/404")
@@ -16,4 +16,4 @@ const MonthView = ({ params }: { params: { year: string, month: string, day: str
   )
 }
 
-export default MonthView
+export default EditorPage

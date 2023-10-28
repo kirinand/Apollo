@@ -8,4 +8,5 @@ urlpatterns = [
     path('verify', views.CustomTokenVerifyView.as_view()),
     path('refresh', views.CustomTokenRefreshView.as_view()),
     path('logout', views.LogoutView.as_view()),
+    path('update/name', views.UpdateNameView.as_view()),
 ]

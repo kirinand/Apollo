@@ -1,8 +1,9 @@
 import { z } from "zod"
+import constants from "@/constants"
 
 export const signupSchema = z.object({
   name: z.string().min(1).max(50).refine(val => val.trim() != '', {
-      message: "Name must not be blank"
+      message: constants.msg.nameNotBlank
     }
   ),
   email: z.string().email(),
@@ -20,4 +21,8 @@ export const emailSchema = z.object({
 
 export const passwordSchema = z.object({
   password: signupSchema.shape.password
+})
+
+export const nameSchema = z.object({
+  name: signupSchema.shape.name
 })

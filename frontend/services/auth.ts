@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
 import { useAppContext } from '@/providers/context/app-context-providers'

@@ -5,14 +5,14 @@ import { checkPath } from "../../../utils"
 
 const EditorPage = ({ params }: { params: { year: string, month: string, day: string } }) => {
 
-  if (!checkPath(params.year, params.month, params.day)) {
+  const { year, month, day } = params
+
+  if (!checkPath(year, month, day)) {
     return redirect("/404")
   }
 
-  const date = new Date(parseInt(params.year), parseInt(params.month) - 1, parseInt(params.day))
-
   return (
-    <EditorForm date={date}/>
+    <EditorForm year={year} month={month} day={day}/>
   )
 }
 

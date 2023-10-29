@@ -6,6 +6,10 @@ const constants = {
     invalOrInact: "Invalid credentials or inactive account.",
     nameValidation: "Name too long or too short.",
     nameNotBlank: "Name must not be blank.",
+    unsavedChanges: "Unsaved changes",
+    lastSaved: "Last saved {0}",
+    saving: "Saving...",
+    startWriting: "Start writing...",
   },
   success: {
     activateSuccess: "Account activated.",
@@ -18,6 +22,7 @@ const constants = {
     resetPswdFail: "Failed to reset password.",
     googleLoginFail: "Failed to login with Google.",
     updateNameFail: "Failed to update name.",
+    getEntryFail: "Failed to retrieve entry.",
     generic: "Something went wrong.",
   },
   info: {

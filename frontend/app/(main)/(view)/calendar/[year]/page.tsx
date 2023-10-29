@@ -9,7 +9,6 @@ const YearPage = ({ params }: { params: { year: string } }) => {
     return redirect("/404")
   }
 
-  const year = parseInt(params.year)
   const date = new Date(parseInt(params.year), 0)
 
   return (

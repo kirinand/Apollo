@@ -11,7 +11,7 @@ import {
 
 const CalendarBox = (props: CalendarBoxProps) => {
   return (
-    <Link href={props.href}>
+    <Link href={props.disabled ? '' : props.href}>
       <Card>
         <CardHeader>
           <CardTitle>{props.title}</CardTitle>
@@ -27,6 +27,7 @@ const CalendarBox = (props: CalendarBoxProps) => {
 type CalendarBoxProps = {
   title: string,
   href: string,
+  disabled?: boolean,
   score?: number,
 }
 

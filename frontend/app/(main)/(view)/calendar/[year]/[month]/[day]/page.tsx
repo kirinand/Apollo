@@ -1,4 +1,5 @@
-import { redirect } from "next/navigation";
+import { redirect } from "next/navigation"
+import { format } from "date-fns"
 
 import EditorForm from "@/components/forms/editor-form"
 import { checkPath } from "../../../utils"
@@ -11,8 +12,15 @@ const EditorPage = ({ params }: { params: { year: string, month: string, day: st
     return redirect("/404")
   }
 
+  const date = new Date(parseInt(params.year), parseInt(params.month) - 1, parseInt(params.day))
+  const dateDisplay = format(date, "d MMMM, yyyy")
+
   return (
-    <EditorForm year={year} month={month} day={day}/>
+    <main>
+      <div>{dateDisplay}</div>
+      <EditorForm year={year} month={month} day={day}/>
+    </main>
+
   )
 }
 

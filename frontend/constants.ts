@@ -30,7 +30,8 @@ const constants = {
     activationNeeded: "Please activate your account. An activation link has been sent to {0}",
   },
   title: {
-    google: 'Google'
+    google: 'Google',
+    start: 'Start',
   },
   prompt: {
     alreadyHaveAcc: "Already have an account? Login",

@@ -13,6 +13,7 @@ const YearPage = ({ params }: { params: { year: string } }) => {
 
   return (
     <main>
+      <div>{params.year}</div>
       <CalendarContainer mode="year" date={date}/>
     </main>
   )

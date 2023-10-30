@@ -21,6 +21,7 @@ api_urlpatterns = [
     path('', include('djoser.urls')),
     path('user/', include('user.urls')),
     path('journal/', include('journal.urls')),
+    path('sentiment/', include('sentiment.urls')),
 ]
 
 urlpatterns = [

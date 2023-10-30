@@ -29,6 +29,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
+        # Include email in token
         token['email'] = user.email
         
         return token
@@ -44,6 +45,7 @@ class CustomTokenRefreshSerializer(TokenRefreshSerializer):
         data = super().validate(attrs)
         token = attrs['refresh']
         
+        # include email in response data
         decoded_token = jwt.decode(token, settings.SIMPLE_JWT['SIGNING_KEY'], algorithms=[settings.SIMPLE_JWT['ALGORITHM']])
         data.update({'email': decoded_token.get('email')})
         
@@ -54,6 +56,7 @@ class CustomTokenVerifySerializer(TokenVerifySerializer):
         data = super().validate(attrs)
         token = attrs['token']
 
+        # include email in response data
         decoded_token = jwt.decode(token, settings.SIMPLE_JWT['SIGNING_KEY'], algorithms=[settings.SIMPLE_JWT['ALGORITHM']])  
         data.update({'email': decoded_token.get('email')})
         

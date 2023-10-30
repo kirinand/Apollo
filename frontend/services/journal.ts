@@ -24,13 +24,24 @@ export const useGetEntry = (year: string, month: string, day: string) => {
       return response.data
     },
     {
-      retry: (failureCount, error: any) => {
+      retry: (_failureCount, error: any) => {
         if (error?.response?.status === 404) {
           return false
         }
         return true
       },
       cacheTime: 0,
+    }
+  )
+}
+
+export const useAnalyseEntry = () => {
+  return useMutation(
+    async ({ year, month, day }: { year: string, month: string, day: string }) => {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/journal/analyse/${year}/${month}/${day}`, {}, {
+        withCredentials: true,
+      })
+      return response.data
     }
   )
 }

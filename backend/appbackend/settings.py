@@ -53,7 +53,9 @@ INSTALLED_APPS = [
     'djoser',
     'social_django',
     'sslserver',
+    'django_celery_results',
     
+    'appbackend',
     'user',
     'journal',
     'sentiment',
@@ -241,10 +243,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'user.User'
 
 CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOWED_ORIGINS = env(
     'CORS_ALLOWED_ORIGINS', 
     default='https://localhost:3000,https://127.0.0.1:3000'
 ).split(',')
+
 CORS_ALLOW_METHODS = (
     "DELETE",
     "GET",
@@ -253,3 +257,13 @@ CORS_ALLOW_METHODS = (
     "POST",
     "PUT",
 )
+
+# Celery
+
+CELERY_BROKER_URL = env('CELERY_BROKER_URL')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'America/Vancouver'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_IMPORTS = ('appbackend.tasks',)

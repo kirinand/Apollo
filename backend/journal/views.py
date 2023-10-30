@@ -1,11 +1,13 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from django.core.paginator import Paginator
 from django.db import IntegrityError
 
 from .models import JournalEntry
 from .serializers import JournalEntrySerializer
+from appbackend.tasks import analyse_sentiment
+
+PREFIX_AS = 'analyse_sentiment'
 
 @api_view(['POST'])
 def upsert_entry(request, year, month, day):
@@ -14,13 +16,27 @@ def upsert_entry(request, year, month, day):
     try:
         entry = JournalEntry.objects.get(user=request.user, date__year=year, date__month=month, date__day=day)
         entry.content = content
+        entry.is_analysed = False
     except JournalEntry.DoesNotExist:
         entry = JournalEntry.objects.create(user=request.user, content=content, date=f'{year}-{month}-{day}')
         action = 'created'
-        
     entry.save()
+    
+    # TODO: Fix this: Tasks in queue does not get executed
+    analyse_sentiment.apply_async(args=(entry.id,), countdown=300, task_id=f'{PREFIX_AS}_{request.user.id}_{entry.id}')
     return Response({'message': f'Successfully {action} entry', 'id': entry.id})
 
+@api_view(['POST'])
+def analyse_entry(request, year, month, day):
+    try:
+        entry = JournalEntry.objects.get(user=request.user, date__year=year, date__month=month, date__day=day)
+    except JournalEntry.DoesNotExist:
+        return Response({})
+    
+    if not entry.is_analysed:
+        # TODO: Fix this: Tasks in queue does not get executed
+        analyse_sentiment.apply_async(args=(entry.id,), countdown=5, task_id=f'{PREFIX_AS}_{request.user.id}_{entry.id}')
+    return Response({})
 
 @api_view(['GET'])
 def get_entry(request, year, month, day):
@@ -57,3 +73,9 @@ def delete_entry(request, year, month, day):
         return Response({'message': 'Entry does not exist'})
     
     return Response({'message': 'Successfully deleted entry'})
+
+@api_view(['GET'])
+def test_debug_task(request):
+    from appbackend.celery import debug_task
+    result = debug_task()
+    return Response({'message': f'{result}'})

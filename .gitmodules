@@ -1,4 +1,3 @@
-
 [submodule "backend/multi_label_emo_classifier"]
 	path = backend/multi_label_emo_classifier
 	url = https://github.com/kirinand/Multi-Label-Emo-classifier.git

@@ -8,3 +8,9 @@ export type UserType = {
   name: string,
   isLoggedIn: boolean,
 }
+
+export type SentimentType = {
+  id: number,
+  name: string,
+  count: number,
+}

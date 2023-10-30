@@ -18,7 +18,10 @@ app.prepare().then(() => {
         const parsedUrl = parse(req.url, true);
         await handle(req, res, parsedUrl);
     }).listen(port, (err) => {
-        if (err) throw err;
+        if (err) {
+            console.log('Connection error', err)
+            throw err
+        }
         console.log('ready - started server on url: https://localhost:' + port);
     });
 });

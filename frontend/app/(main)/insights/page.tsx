@@ -1,3 +1,7 @@
+"use client"
+
+import { useState } from "react"
+
 import {
   Select,
   SelectContent,
@@ -5,62 +9,43 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Polar from "./charts/polar"
+import Line from "./charts/line"
 
-import RadarChart from "@/components/nivo/radar-chart"
-
-const dummy = 
-  [
-    {
-        "id": 0,
-        "name": "admiration",
-        "count": 1
-    },
-    {
-        "id": 13,
-        "name": "excitement",
-        "count": 1
-    },
-    {
-        "id": 14,
-        "name": "fear",
-        "count": 1
-    },
-    {
-        "id": 17,
-        "name": "joy",
-        "count": 1
-    },
-    {
-        "id": 26,
-        "name": "surprise",
-        "count": 2
-    },
-    {
-        "id": 27,
-        "name": "neutral",
-        "count": 1
-    }
-  ]
-
+const defaultPeriod = "week"
+const defaultTab = "radar"
 
 const InsightPage = () => {
+  const [tab, setTab] = useState(defaultTab)
+  const [period, setPeriod] = useState(defaultPeriod)
+
   return (
     <div>
       <div>
-        <Select>
+      <Tabs defaultValue={defaultTab} className="w-[400px]" onValueChange={setTab}>
+        <TabsList>
+          <TabsTrigger value="radar">Polar Chart</TabsTrigger>
+          <TabsTrigger value="line">Line Chart</TabsTrigger>
+        </TabsList>
+      </Tabs>
+      </div>
+      <div>
+        <Select defaultValue={defaultPeriod} onValueChange={setPeriod}>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Theme" />
+            <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="light">Week</SelectItem>
-            <SelectItem value="dark">Month</SelectItem>
-            <SelectItem value="system">Quarter</SelectItem>
-            <SelectItem value="system">Year</SelectItem>
+            <SelectItem value="week">Week</SelectItem>
+            <SelectItem value="month">Month</SelectItem>
+            <SelectItem value="quarter">Quarter</SelectItem>
+            <SelectItem value="year">Year</SelectItem>
           </SelectContent>
         </Select>
       </div>
       <div style={{ height: 400 }}>
-        <RadarChart data={dummy} />
+        {tab === "radar" && <Polar period={period}/>}
+        {tab === "line" && <Line period={period}/>}
       </div>
     </div>
   )

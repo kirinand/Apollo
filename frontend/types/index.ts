@@ -14,3 +14,8 @@ export type SentimentType = {
   name: string,
   count: number,
 }
+
+export type DailyScoreType = {
+  date: string,
+  score: number,
+}

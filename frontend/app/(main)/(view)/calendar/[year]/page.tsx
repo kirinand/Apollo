@@ -2,6 +2,7 @@ import { redirect } from "next/navigation"
 
 import CalendarContainer from "@/components/calendar/container"
 import { checkPath } from "../utils"
+import { DateAdjuster } from "@/components/calendar/date-adjuster"
 
 const YearPage = ({ params }: { params: { year: string } }) => {
   
@@ -14,6 +15,7 @@ const YearPage = ({ params }: { params: { year: string } }) => {
   return (
     <main>
       <div>{params.year}</div>
+      <DateAdjuster mode="year" date={date}></DateAdjuster>
       <CalendarContainer mode="year" date={date}/>
     </main>
   )

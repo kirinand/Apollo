@@ -1,8 +1,12 @@
 import { redirect } from "next/navigation";
 import { format } from "date-fns";
+import { ChevronLeftCircle } from "lucide-react";
+import Link from "next/link"
 
 import CalendarContainer from "@/components/calendar/container";
 import { checkPath } from "../../utils";
+import { DateAdjuster } from "@/components/calendar/date-adjuster";
+import { Button } from "@/components/ui/button";
 
 const MonthPage = ({ params }: { params: { year: string; month: string } }) => {
 
@@ -16,6 +20,12 @@ const MonthPage = ({ params }: { params: { year: string; month: string } }) => {
   return (
     <main>
       <div>{dateDisplay}</div>
+      <Link href={`/calendar/${params.year}`}>
+        <Button>
+          <ChevronLeftCircle />
+        </Button>
+      </Link>
+      <DateAdjuster mode="month" date={date}></DateAdjuster>
       <CalendarContainer mode="month" date={date} />
     </main>
   );

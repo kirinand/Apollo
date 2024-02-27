@@ -18,14 +18,16 @@ const MonthPage = ({ params }: { params: { year: string; month: string } }) => {
   const dateDisplay = format(date, "MMMM yyyy")
 
   return (
-    <main>
-      <div>{dateDisplay}</div>
-      <Link href={`/calendar/${params.year}`}>
-        <Button>
-          <ChevronLeftCircle />
-        </Button>
-      </Link>
-      <DateAdjuster mode="month" date={date}></DateAdjuster>
+    <main className="container mt-4">
+      <div className="text-lg border-b h-10">{dateDisplay}</div>
+      <div className="flex items-center h-16 justify-between">
+        <Link href={`/calendar/${params.year}`}>
+          <Button variant="outline" size="icon">
+            <ChevronLeftCircle />
+          </Button>
+        </Link>
+        <DateAdjuster mode="month" date={date}></DateAdjuster>
+      </div>
       <CalendarContainer mode="month" date={date} />
     </main>
   );

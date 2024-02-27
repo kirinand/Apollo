@@ -37,13 +37,13 @@ export const DateAdjuster = (props: DateAdjusterProps) => {
     return (
       <div>
         <Link href={prevLink}>
-          <Button>
+          <Button variant="outline" size="icon">
             <ChevronLeft />
           </Button>
         </Link>
 
         <Link href={nextLink}>
-          <Button>
+          <Button variant="outline" size="icon">
             <ChevronRight />
           </Button>
         </Link>

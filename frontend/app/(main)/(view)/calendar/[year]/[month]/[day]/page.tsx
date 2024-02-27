@@ -20,14 +20,16 @@ const EditorPage = ({ params }: { params: { year: string, month: string, day: st
   const dateDisplay = format(date, "d MMMM, yyyy")
 
   return (
-    <main>
-      <div>{dateDisplay}</div>
-      <Link href={`/calendar/${year}/${month}`}>
-        <Button>
-          <ChevronLeftCircle />
-        </Button>
-      </Link>
-      <DateAdjuster date={date} mode='day'></DateAdjuster>
+    <main className="container mt-4">
+      <div className="text-lg border-b h-10">{dateDisplay}</div>
+      <div className="flex items-center h-16 justify-between">
+        <Link href={`/calendar/${year}/${month}`}>
+          <Button variant="outline" size="icon">
+            <ChevronLeftCircle />
+          </Button>
+        </Link>
+        <DateAdjuster date={date} mode='day'></DateAdjuster>
+      </div>
       <EditorForm year={year} month={month} day={day}/>
     </main>
 

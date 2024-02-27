@@ -1,4 +1,4 @@
-import { log } from "console"
+import { count, log } from "console"
 
 const constants = {
   app: {
@@ -55,6 +55,9 @@ const constants = {
     year: "Year",
     polarChart: "Polar Chart",
     lineChart: "Line Chart",
+    time: "time",
+    score: "score",
+    count: "count",
   },
   prompt: {
     alreadyHaveAcc: "Already have an account? Login",

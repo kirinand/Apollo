@@ -1,6 +1,7 @@
 'use client'
 
 import { ResponsiveLine } from '@nivo/line'
+import constants from '@/constants'
 
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
@@ -26,7 +27,7 @@ const LineChart = ({ data }: { data: Array<DataType> }) => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'transportation',
+            legend: 'time',
             legendOffset: 36,
             legendPosition: 'middle'
         }}

@@ -3,6 +3,7 @@
 import { ResponsiveRadar } from '@nivo/radar'
 
 import { SentimentType } from '@/types'
+import constants from '@/constants'
 
 // import dynamic from "next/dynamic"
 // const ResponsiveRadar = dynamic(() => import("@nivo/radar").then(m => m.ResponsiveRadar), { ssr: false })

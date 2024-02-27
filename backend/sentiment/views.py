@@ -33,4 +33,6 @@ def aggregate_scores_by_day(request):
     .order_by('date')
   )
   
+  print(start)
+  
   return Response({'data': result})

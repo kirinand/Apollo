@@ -22,7 +22,6 @@ def upsert_entry(request, year, month, day):
         action = 'created'
     entry.save()
     
-    # TODO: Fix this: Tasks in queue does not get executed
     try:
         analyse_sentiment.apply_async(args=(entry.id,), countdown=300, task_id=f'{PREFIX_AS}_{request.user.id}_{entry.id}')
     except Exception as e:
@@ -38,7 +37,6 @@ def analyse_entry(request, year, month, day):
         return Response({})
     
     if not entry.is_analysed:
-        # TODO: Fix this: Tasks in queue does not get executed
         try:
             analyse_sentiment.apply_async(args=(entry.id,), countdown=5, task_id=f'{PREFIX_AS}_{request.user.id}_{entry.id}')
         except Exception as e:

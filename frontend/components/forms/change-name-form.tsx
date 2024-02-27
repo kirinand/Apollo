@@ -5,6 +5,7 @@ import z from "zod"
 import { Button } from "@/components/ui/button"
 import { nameSchema } from "@/lib/validation-schemas"
 import { useUpdateName } from "@/services/auth"
+import { Input } from "@/components/ui/input"
 import constants from "@/constants";
 
 const ChangeNameForm = (props: Props) => {
@@ -42,9 +43,9 @@ const ChangeNameForm = (props: Props) => {
   }, [isEditable, inputRef])
 
   return (
-    <div className="flex flex-col w-full gap-2">
-      <form onSubmit={submitForm}>
-        <input 
+    <div>
+      <form onSubmit={submitForm} className="flex flex-col space-y-4">
+        <Input 
           ref={inputRef}
           value={nameVal} 
           onChange={(e) => {
@@ -54,7 +55,7 @@ const ChangeNameForm = (props: Props) => {
         />
         {error && <p>{error}</p>}
         {isEditable
-          ? (<div>
+          ? (<div className="flex space-x-4">
               <Button type="submit">Save</Button>
               <Button
                 onClick={() => {

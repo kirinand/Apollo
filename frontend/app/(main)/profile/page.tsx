@@ -5,6 +5,7 @@ import { LogoutButton, ResetPasswordButton } from "@/components/buttons";
 import { useAppContext } from "@/providers/context/app-context-providers";
 import { Button } from "@/components/ui/button";
 import ChangeNameForm from "@/components/forms/change-name-form";
+import constants from "@/constants";
 
 const ProfilePage = () => {
   const { user } = useAppContext();
@@ -12,45 +13,47 @@ const ProfilePage = () => {
   const [isNameEditable, setNameEditable] = useState(false);
 
   return (
-    <div>
-      <div>
-        <div>
-          <p>Account</p>
-          <p>{email}</p>
+    <div className="container mt-4">
+      <div className="container">
+        <div className="flex border-b items-center h-20 justify-between max-w-md space-x-4">
+          <div className="flex justify-between space-x-8 max-w-full min-w-240">
+            <p className="font-bold opacity-75">Account</p>
+            <p className="max-w-full truncate">{email}</p>
+          </div>
+          <div className="flex-shrink-0">
+            <ResetPasswordButton email={email} />
+          </div>
         </div>
-        <div>
-          <ResetPasswordButton email={email} />
+        <div className="flex border-b items-center py-6 justify-between max-w-md space-x-4">
+          <div className="flex justify-between items-start space-x-8 min-w-240">
+            <p className="flex pt-2 font-bold opacity-75">Name</p>
+            <ChangeNameForm
+              name={name}
+              isEditable={isNameEditable}
+              setEditable={(isEditable) => {
+                setNameEditable(isEditable);
+              }}
+            />
+          </div>
+          <div className="flex-shrink-0">
+            <Button
+              onClick={() => {
+                setNameEditable(true);
+              }}
+            >
+              Edit Name
+            </Button>
+          </div>
         </div>
-      </div>
-      <div>
-        <div>
-          <p>Name</p>
-          <ChangeNameForm
-            name={name}
-            isEditable={isNameEditable}
-            setEditable={(isEditable) => {
-              setNameEditable(isEditable);
-            }}
-          />
-        </div>
-        <div>
-          <Button
-            onClick={() => {
-              setNameEditable(true)
-            }}
-          >
-            Edit Name
-          </Button>
-        </div>
-      </div>
-      <div>
-        <div></div>
-        <div>
-          <LogoutButton />
+        <div className="flex border-b items-center h-20 justify-between max-w-md">
+          <div className="min-w-240"></div>
+          <div>
+            <LogoutButton />
+          </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ProfilePage;

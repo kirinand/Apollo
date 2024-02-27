@@ -32,6 +32,11 @@ const constants = {
   title: {
     google: 'Google',
     start: 'Start',
+    home: 'Home',
+    write: 'Write',
+    view: 'View',
+    insights: 'Insights',
+    profile: 'Profile',
   },
   prompt: {
     alreadyHaveAcc: "Already have an account? Login",

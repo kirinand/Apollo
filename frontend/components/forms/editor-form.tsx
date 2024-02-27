@@ -68,6 +68,9 @@ const EditorForm = (props: EditorFormProps) => {
               lastSaved: Date.now(),
             })
           })
+          .catch(() => {
+            setSaveState(prev => ({ ...prev, status: 0 }))
+          })
       }, 2000)
 
       timeoutId.current = newTimeoutId

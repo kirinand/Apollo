@@ -11,6 +11,11 @@ export const useUpsertEntry = () => {
       })
       return response.data
     },
+    {
+      onError: (error: any) => {
+        console.log('error: Upsert failed', error.message)
+      }
+    }
   )
 }
 
@@ -42,6 +47,11 @@ export const useAnalyseEntry = () => {
         withCredentials: true,
       })
       return response.data
+    },
+    {
+      onError: (error: any) => {
+        console.log('error: Analyse failed', error.message)
+      }
     }
   )
 }

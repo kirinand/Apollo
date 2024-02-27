@@ -1,23 +1,25 @@
+import constants from "@/constants"
+
 export const menuConfig = {
   mainNav: [
     {
       key: 'write',
-      title: "Write",
+      title: constants.title.write,
       href: "/calendar"
     },
     {
       key: 'view',
-      title: "View",
+      title: constants.title.view,
       href: "/calendar"
     },
     {
       key: 'insight',
-      title: "Insights",
+      title: constants.title.insights,
       href: "/insights"
     },
     {
       key: 'profile',
-      title: "Profile",
+      title: constants.title.profile,
       href: "/profile"
     },
   ],

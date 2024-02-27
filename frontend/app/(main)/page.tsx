@@ -25,7 +25,7 @@ export default function Home() {
         </div>
         <div>
           <Link href={`/calendar/${year}/${month}/${day}`}>
-            <Button>{constants.title.start}</Button>
+            <Button variant="outline" size="lg" className="border-black text-lg">{constants.title.start}</Button>
           </Link>
         </div>
       </div>

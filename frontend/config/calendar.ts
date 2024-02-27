@@ -1,14 +1,18 @@
+import constants from "@/constants"
+
+const month = constants.month
+
 export const monthConfig = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  month.jan,
+  month.feb,
+  month.mar,
+  month.apr,
+  month.may,
+  month.jun,
+  month.jul,
+  month.aug,
+  month.sep,
+  month.oct,
+  month.nov,
+  month.dec,
 ]

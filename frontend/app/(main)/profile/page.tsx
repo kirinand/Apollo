@@ -17,7 +17,7 @@ const ProfilePage = () => {
       <div className="container">
         <div className="flex border-b items-center h-20 justify-between max-w-md space-x-4">
           <div className="flex justify-between space-x-8 max-w-full min-w-240">
-            <p className="font-bold opacity-75">Account</p>
+            <p className="font-bold opacity-75">{constants.title.account}</p>
             <p className="max-w-full truncate">{email}</p>
           </div>
           <div className="flex-shrink-0">
@@ -26,7 +26,7 @@ const ProfilePage = () => {
         </div>
         <div className="flex border-b items-center py-6 justify-between max-w-md space-x-4">
           <div className="flex justify-between items-start space-x-8 min-w-240">
-            <p className="flex pt-2 font-bold opacity-75">Name</p>
+            <p className="flex pt-2 font-bold opacity-75">{constants.title.name}</p>
             <ChangeNameForm
               name={name}
               isEditable={isNameEditable}
@@ -41,7 +41,7 @@ const ProfilePage = () => {
                 setNameEditable(true);
               }}
             >
-              Edit Name
+              {constants.prompt.editName}
             </Button>
           </div>
         </div>

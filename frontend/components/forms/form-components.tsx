@@ -16,6 +16,7 @@ type CustomFormFieldProps = {
   control: any;
   description?: string;
   placeholder?: string;
+  type?: string;
 }
 
 export const CustomFormField = (props: CustomFormFieldProps) => {
@@ -27,7 +28,7 @@ export const CustomFormField = (props: CustomFormFieldProps) => {
         <FormItem>
           <FormLabel>{props.label}</FormLabel>
           <FormControl>
-            <Input placeholder={props.placeholder || ""} {...field} />
+            <Input placeholder={props.placeholder || ""} type={props.type} {...field} />
           </FormControl>
           <FormDescription>{props.description || ""}</FormDescription>
           <FormMessage />

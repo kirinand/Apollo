@@ -1,3 +1,5 @@
+import { log } from "console"
+
 const constants = {
   app: {
     name: "Apollo Journal"
@@ -10,6 +12,7 @@ const constants = {
     lastSaved: "Last saved {0}",
     saving: "Saving...",
     startWriting: "Start writing...",
+    yourEmail: "your email",
   },
   success: {
     activateSuccess: "Account activated.",
@@ -37,11 +40,46 @@ const constants = {
     view: 'View',
     insights: 'Insights',
     profile: 'Profile',
+    email: 'Email',
+    password: 'Password',
+    welcomeBack: 'Welcome Back',
+    createAcc: 'Create Your Account',
+    yourName: 'Your Name',
+    account: 'Account',
+    name: 'Name',
+  },
+  label: {
+    week: "Week",
+    month: "Month",
+    quarter: "Quarter",
+    year: "Year",
+    polarChart: "Polar Chart",
+    lineChart: "Line Chart",
   },
   prompt: {
     alreadyHaveAcc: "Already have an account? Login",
     doNotHaveAcc: "Do not have an account? Signup",
     orContinueWith: "Or continue with",
+    signupWithEmail: "Signup with Email",
+    forgotPswd: "Forgot password?",
+    loginWithEmail: "Login with Email",
+    resetPassword: "Reset Password",
+    logout: "Logout",
+    editName: "Edit Name",
+  },
+  month: {
+    jan: "January",
+    feb: "February",
+    mar: "March",
+    apr: "April",
+    may: "May",
+    jun: "June",
+    jul: "July",
+    aug: "August",
+    sep: "September",
+    oct: "October",
+    nov: "November",
+    dec: "December",
   }
 }
 

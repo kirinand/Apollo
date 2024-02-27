@@ -36,10 +36,10 @@ export default function ForgotPasswordForm() {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <CustomFormField
           name="email"
-          label="Email"
+          label={constants.title.email}
           control={form.control}
         />
-        <Button type="submit">Reset Password</Button>
+        <Button type="submit">{constants.prompt.resetPassword}</Button>
       </form>
     </Form>
   )

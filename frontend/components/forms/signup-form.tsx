@@ -9,6 +9,7 @@ import { Form } from "@/components/ui/form"
 import { signupSchema } from "@/lib/validation-schemas"
 import { CustomFormField } from "./form-components"
 import { useSignup } from "@/services/auth"
+import constants from "@/constants"
 
 type FormValues = z.infer<typeof signupSchema>
 
@@ -26,20 +27,21 @@ export default function SignupForm() {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <CustomFormField
           name="name"
-          label="Your Name"
+          label={constants.title.yourName}
           control={form.control}
         />
         <CustomFormField
           name="email"
-          label="Email"
+          label={constants.title.email}
           control={form.control}
         />
         <CustomFormField
           name="password"
-          label="Password"
+          label={constants.title.password}
+          type="password"
           control={form.control}
         />
-        <Button type="submit">Signup with Email</Button>
+        <Button type="submit" className="w-full my-2">{constants.prompt.signupWithEmail}</Button>
       </form>
     </Form>
   )

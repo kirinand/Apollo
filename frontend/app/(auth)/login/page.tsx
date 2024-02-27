@@ -1,10 +1,11 @@
 import UserAuthWidget from "@/components/user-auth-widget"
+import constants from "@/constants"
 
 export default function LoginPage() {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center h-screen">
       <UserAuthWidget
-        header="Welcome back"
+        header={constants.title.welcomeBack}
         mode="login"
       />
     </div>

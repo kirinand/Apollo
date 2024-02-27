@@ -12,11 +12,11 @@ const LineChart = ({ data }: { data: Array<DataType> }) => (
     <ResponsiveLine
         data={data}
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: 'point' }}
+        xScale={{ type: 'time' }}
         yScale={{
             type: 'linear',
-            min: 'auto',
-            max: 'auto',
+            min: -2,
+            max: 2,
             stacked: true,
             reverse: false
         }}
@@ -24,10 +24,10 @@ const LineChart = ({ data }: { data: Array<DataType> }) => (
         axisTop={null}
         axisRight={null}
         axisBottom={{
+            format: '%d/%m',
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'time',
             legendOffset: 36,
             legendPosition: 'middle'
         }}
@@ -35,7 +35,6 @@ const LineChart = ({ data }: { data: Array<DataType> }) => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'count',
             legendOffset: -40,
             legendPosition: 'middle'
         }}

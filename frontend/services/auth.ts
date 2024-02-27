@@ -194,7 +194,7 @@ export const useVerify = () => {
     },
     {
       onSuccess: (data: any) => {
-        console.log('success: Verify succeeded', data)
+        console.log('success: Verify succeeded')
         setUser({
           email: data.email,
           name: data.name,
@@ -222,7 +222,7 @@ export const useRefresh = () => {
     },
     {
       onSuccess: (data: any) => {
-        console.log('success: Refresh succeeded', data)
+        console.log('success: Refresh succeeded')
         setUser({
           email: data.email,
           name: data.name,

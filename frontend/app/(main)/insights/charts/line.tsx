@@ -38,7 +38,7 @@ const Line = ({ period }: Props) => {
   const chartData = data.reduce((acc: Array<DataType>, obj: {date: string, score: number }) => {
     acc[0].data.push({
       x: new Date(obj.date),
-      y: obj.score
+      y: Math.round(obj.score * 100) / 100
     })
 
     return acc

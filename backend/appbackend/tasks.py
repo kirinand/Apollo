@@ -10,7 +10,7 @@ logger = get_task_logger(__name__)
 
 @shared_task
 def analyse_sentiment(entry_id):
-  logger.info("Task started")
+  logger.info("Analyse task started")
   entry = JournalEntry.objects.get(id=entry_id)
   content = entry.content
 
@@ -27,7 +27,7 @@ def analyse_sentiment(entry_id):
     entry.is_analysed = True
     entry.analysed_content = content
     entry.save()
-    logger.info("Task ended")
+    logger.info("Analyse task ended")
     
  
 def _check_analyse_needed(content, analysed_content):

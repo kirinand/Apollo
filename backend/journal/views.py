@@ -23,7 +23,11 @@ def upsert_entry(request, year, month, day):
     entry.save()
     
     # TODO: Fix this: Tasks in queue does not get executed
-    analyse_sentiment.apply_async(args=(entry.id,), countdown=300, task_id=f'{PREFIX_AS}_{request.user.id}_{entry.id}')
+    try:
+        analyse_sentiment.apply_async(args=(entry.id,), countdown=300, task_id=f'{PREFIX_AS}_{request.user.id}_{entry.id}')
+    except Exception as e:
+        print("Failed to add to task queue", e)
+        
     return Response({'message': f'Successfully {action} entry', 'id': entry.id})
 
 @api_view(['POST'])
@@ -35,7 +39,11 @@ def analyse_entry(request, year, month, day):
     
     if not entry.is_analysed:
         # TODO: Fix this: Tasks in queue does not get executed
-        analyse_sentiment.apply_async(args=(entry.id,), countdown=5, task_id=f'{PREFIX_AS}_{request.user.id}_{entry.id}')
+        try:
+            analyse_sentiment.apply_async(args=(entry.id,), countdown=5, task_id=f'{PREFIX_AS}_{request.user.id}_{entry.id}')
+        except Exception as e:
+            print("Failed to add to task queue", e)
+            
     return Response({})
 
 @api_view(['GET'])

@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from datetime import datetime, timedelta
-from django.db.models import Count, F, Sum
+from django.db.models import Count, F, Avg
 
 from journal.models import JournalEntry
 
@@ -29,7 +29,7 @@ def aggregate_scores_by_day(request):
   result = (JournalEntry.objects
     .filter(user=request.user, date__gte=start, date__lte=end)
     .values('date')
-    .annotate(score=Sum('labels__score'))
+    .annotate(score=Avg('labels__score'))
     .order_by('date')
   )
   

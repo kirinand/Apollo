@@ -100,7 +100,7 @@ const EditorForm = (props: EditorFormProps) => {
 
   return (
     <div className="flex flex-col w-full gap-2">
-      <div>{
+      <div className="text-sm ps-1">{
         isEdited.current ? 
         (() => {
           switch (saveState.status) {
@@ -118,6 +118,7 @@ const EditorForm = (props: EditorFormProps) => {
       }</div>
       <Textarea 
         name='content' 
+        className="h-96"
         placeholder={constants.msg.startWriting} 
         value={content}
         onChange={(e) => setContent(e.target.value)}

@@ -20,13 +20,13 @@ const CalendarBox = (props: CalendarBoxProps) => {
   }
 
   return (
-    <Link className={props.offset ? `col-start-${props.offset}` : ''} href={props.disabled ? '' : props.href}>
+    <Link className={cn(props.offset ? `col-start-${props.offset}` : undefined)} href={props.disabled ? '' : props.href}>
       <Card className={"py-2"}>
         <CardContent className={"text-center pb-0"}>
           <p>{props.content}</p>
         </CardContent>
-        <CardHeader className={headerColor}>
-          <CardTitle className={"text-center"}>{props.title}</CardTitle>
+        <CardHeader className={cn(headerColor)}>
+          <CardTitle className={"text-center truncate py-0.5"}>{props.title}</CardTitle>
         </CardHeader>
       </Card>
     </Link>

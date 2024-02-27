@@ -1,6 +1,6 @@
 "use client"
 
-import { getYear, getMonth, getDay } from "date-fns"
+import { getYear, getMonth, getDate } from "date-fns"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
@@ -11,17 +11,19 @@ export default function Home() {
   const currentDate = new Date()
 
   const year = getYear(currentDate).toString()
-  const month = getMonth(currentDate).toString().padStart(2, '0')
-  const day = getDay(currentDate).toString().padStart(2, '0')
+  const month = (getMonth(currentDate) + 1).toString().padStart(2, '0')
+  const day = getDate(currentDate).toString().padStart(2, '0')
 
-  const { data: [ { quote = "", author = "" } = {}] = [] } = useGetRandomQuote()
+  // const { data: [ { quote = "", author = "" } = {}] = [] } = useGetRandomQuote()
+
+  console.log(year, month, day)
 
   return (
     <main className="container">
       <div className="flex flex-col mx-4 my-8 max-w-md w-full">
         <div className="flex flex-col pb-10 ps-1">
-          <h1 className="text-2xl pb-2">{quote}</h1>
-          <p className="text-xl self-end">{`---- ${author}`}</p>
+          {/* <h1 className="text-2xl pb-2">{quote}</h1>
+          <p className="text-xl self-end">{`---- ${author}`}</p> */}
         </div>
         <div>
           <Link href={`/calendar/${year}/${month}/${day}`}>

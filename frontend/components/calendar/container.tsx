@@ -12,7 +12,7 @@ const Calendar = (props: CalendarProps) => {
 
   if (props.mode === "year") {
     return (
-      <div className={cn("grid", "grid-cols-4")}>
+      <div className={cn("grid", "grid-cols-3", "md:grid-cols-4")}>
         {monthConfig.map((month, idx) => {
           return (
             <CalendarBox
@@ -49,7 +49,7 @@ const Calendar = (props: CalendarProps) => {
               disabled={year === currentYear && month === currentMonth && (day+1) > currentDate}
               mode={props.mode}
               isCurrent={year === currentYear && month === currentMonth && (day+1) === currentDate}
-              {...(day === 0 ? { offset: offset } : {})}
+              offset={day === 0 ? offset : undefined}
             />
           )
         })}
